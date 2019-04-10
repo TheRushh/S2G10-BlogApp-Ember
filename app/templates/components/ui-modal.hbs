@@ -1,0 +1,30 @@
+{{#bs-modal open=modal3 onSubmit=(action "submit") onHidden=(action (mut modal3) false) as |modal|}}
+  {{#modal.header}}
+    <h4 class="modal-title">
+      {{method}} {{model}} "{{fields.title}}"
+    </h4>
+  {{/modal.header}}
+  {{#modal.body}}
+    <div class="content">
+      <div class="ui form">
+        {{#each-in fields as |field|}}
+          <div class="form-group has-primary has-feedback">
+            <div class="input-group">
+              <span class="input-group-addon">{{field}}</span>
+              {{input type="text" class="form-control" cols="50" rows="1" placeholder=(concat "add " field) autofocus="autofocus" value=(mut (get fields field))}}
+            </div>
+          </div>
+        {{/each-in}}
+      </div>
+    </div>
+  {{/modal.body}}
+  {{#modal.footer}}
+    {{#bs-button onClick=(action modal.close)}}Cancel{{/bs-button}}
+    {{#bs-button type="btn btn-success" onClick=(action modal.submit)}}Save <span class="glyphicon glyphicon-ok"/>{{/bs-button}}
+  {{/modal.footer}}
+{{/bs-modal}}
+{{#if (eq model "edit")}}
+  <button class="badge badge-success badge-circle pull-right" onClick={{action (mut modal3) true}}><span class="glyphicon glyphicon-pencil"/></button>
+{{else}}
+  {{#bs-button type="primary" onClick=(action (mut modal3) true)}}Add new {{model}}{{/bs-button}}
+{{/if}}
